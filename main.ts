@@ -272,6 +272,7 @@ namespace psw_steam {
     //% block="距離[cm] || %format"
     //% group="DS1"
     //% weight=100
+	//% advanced=true
     export function getDistance(format:OutputNumberFormat = OutputNumberFormat.INTEGER):number {
         // calculate distance -> median filter -> return value
         let arr: number[] = [];
@@ -325,6 +326,7 @@ namespace psw_steam {
     //% block="赤外線ON"
     //% group="IR2"
     //% weight=100
+	//% advanced=true
     export function IR_ON() {
         輸送波送信ポート設定()
 
@@ -401,6 +403,7 @@ namespace psw_steam {
     //% block="赤外線OFF"
     //% group="IR2"
     //% weight=90
+    //% advanced=true
     export function IR_OFF() {
         輸送波送信ポート設定()
 
@@ -479,6 +482,7 @@ namespace psw_steam {
     //% duty.min=0 duty.max=100
     //% group="SW1"
     //% weight=60
+	//% advanced=true
     export function sw1_out(duty: number): void {
         pins.analogWritePin(AnalogPin.P0, (duty / 100 * 1023));
     }
