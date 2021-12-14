@@ -242,7 +242,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId = TP2_getTemperature
-    //% block="温度[℃] (TP2) || %format"
+    //% block="温度[℃] aaaaaa(TP2) || %format"
     //% group="TP2(拡張アダプタ)"
     //% weight=100
     //% advanced=true
