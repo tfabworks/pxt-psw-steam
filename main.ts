@@ -243,7 +243,7 @@ namespace psw_steam {
      */
     //% blockId = TP2_getTemperature
     //% block="温度[℃] (TP2) || %format"
-    //% group="TP2"
+    //% group="TP2(拡張アダプタ)"
     //% weight=100
     //% advanced=true
     export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
