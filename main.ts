@@ -19,7 +19,7 @@ enum OutputNumberFormat {
 }
 
 //% weight=115 icon="\uf0e7" color=#d2691e block="How to use electricity"
-namespace kkk {
+namespace psw_steam {
 
     /**
      * Turn ON the controlled-switch
