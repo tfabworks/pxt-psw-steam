@@ -496,6 +496,7 @@ namespace psw_steam {
     //% blockId=get_temperature block="温度[℃] (EN1) || %format"
     //% group="EN1"
     //% weight=100
+	//% advanced=true
     export function getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -511,6 +512,7 @@ namespace psw_steam {
     //% blockId=get_humidity block="湿度[\\%] || %format"
     //% group="EN1"
     //% weight=90
+	//% advanced=true
     export function getHumidity(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -526,6 +528,7 @@ namespace psw_steam {
     //% blockId=get_pressure block="気圧[hPa] || %format"
     //% group="EN1"
     //% weight=80
+	//% advanced=true
     export function getPressure(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -542,6 +545,7 @@ namespace psw_steam {
     //% blockId=get_altitude block="高度差[m] 基準圧%referencePressure || %format"
     //% group="EN1"
     //% weight=70
+	//% advanced=true
     export function getAltitude(referencePressure: number = 1013, format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -1066,5 +1070,16 @@ namespace BME280_I2C {
             ReadSensorData();
         }
         return (currentCompensatedData.humidity) / 1024.0;
+    }
+	
+	/**
+     * TFW-SL1で検知した音の大きさを返します（0-1023）
+     */
+    //% blockId=SL1_sound_pressure block="音の大きさ(SL1)"
+    //% group="SL1"
+    //% weight=100
+    //% advanced=true
+    export function SL1_sound_pressure(): number {
+        return pins.i2cReadNumber(8, NumberFormat.UInt16BE, false)
     }
 }
