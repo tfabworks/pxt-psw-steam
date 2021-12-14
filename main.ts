@@ -26,7 +26,7 @@ namespace psw_steam {
      */
     //% blockId=turn_on block="スイッチオン"
     //% weight=90
-    //% group="PSW スイッチ"
+    //% group="スイッチ(PSW)"
     export function turn_on(): void {
         pins.digitalWritePin(DigitalPin.P12, 1);
     }
@@ -36,7 +36,7 @@ namespace psw_steam {
      */
     //% blockId=turn_off block="スイッチオフ"
     //% weight=80
-    //% group="スイッチ"
+    //% group="スイッチ(PSW)"
     export function turn_off(): void {
         pins.digitalWritePin(DigitalPin.P12, 0);
     }
@@ -46,7 +46,7 @@ namespace psw_steam {
      */
     //% blockId=is_man_moving block="人が動いた"
     //% weight=75
-    //% group="PSW 人感センサー"
+    //% group="人感センサー(PSW)"
     export function is_man_moving(): boolean {
         if (pins.digitalReadPin(DigitalPin.P13) == 1) {
             return true;
@@ -65,7 +65,7 @@ namespace psw_steam {
      */
     //% blockId=is_dark block="暗い"
     //% weight=70
-    //% group="PSW 明るさセンサー"
+    //% group="明るさセンサー(PSW)"
     export function is_dark(): boolean {
         return _is_dark(_暗い判定閾値, _明るい判定閾値);
 
@@ -119,7 +119,7 @@ namespace psw_steam {
     //% block="%light_threshold|より%dark_bright|"
     //% light_threshold.min=0 light_threshold.max=255
     //% weight=60
-    //% group="PSW 明るさセンサー"
+    //% group="明るさセンサー(PSW)"
     export function gt_light_level(light_threshold: number, dark_bright: DARK_BRIGHT): boolean {
         if (_HYSTERESIS < 0) { control.assert(false); }
         if (light_threshold < 0) {
@@ -181,7 +181,7 @@ namespace psw_steam {
      */
     //% blockId=light_level block="明るさ"
     //% weight=55
-    //% group="PSW 明るさセンサー"
+    //% group="明るさセンサー(PSW)"
     export function light_level(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
 //        return _light_level_lux()
         return Math.round(Math.constrain( Math.map( _light_level_lux()-10, 0, 500, 0, 255), 0, 255))
@@ -196,7 +196,7 @@ namespace psw_steam {
     //% blockId=gt_temperature
     //% block="%temperatureThreshold|℃より%settingHotOrCold|"
     //% weight=50
-    //% group="PSW 温度センサー"
+    //% group="温度センサー(PSW)"
     export function gt_temperature(temperatureThreshold: number, settingHotCold: HOT_COLD): boolean {
         if (settingHotCold === HOT_COLD.HOT) {
             if ( get_temperature( OutputNumberFormat.FLOAT ) > temperatureThreshold) {
@@ -222,13 +222,13 @@ namespace psw_steam {
     //% blockId = get_temperature
     //% block="温度[℃]|| %format"
     //% weight=45
-    //% group="PSW 温度センサー"
+    //% group="温度センサー(PSW)"
     export function get_temperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         while(_mtx_temperature) {
             basic.pause(100)
         }
         _mtx_temperature = true;
-        const temperature = DS18B20.Temperature();
+        const temperature = DS18B20.Temperature(8);
         _mtx_temperature = false;
         if (format === OutputNumberFormat.INTEGER) {
             return Math.round(temperature / 100.0);
@@ -1081,5 +1081,26 @@ namespace BME280_I2C {
     //% advanced=true
     export function SL1_sound_pressure(): number {
         return pins.i2cReadNumber(8, NumberFormat.UInt16BE, false)
+    }
+	
+	/**
+     * TFW-TP2の温度[℃]を返します。
+     * @param format number format, eg: OutputNumberFormat.INTEGER
+     */
+    //% blockId = TP2_getTemperature
+    //% block="温度[℃] (TP2) || %format"
+    //% group="TP2"
+    //% weight=100
+    export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
+        while(_mtx_temperature) {
+            basic.pause(100)
+        }
+        _mtx_temperature = true;
+        const temperature = DS18B20.Temperature(0);
+        _mtx_temperature = false;
+        if (format === OutputNumberFormat.INTEGER) {
+            return Math.round(temperature / 100.0);
+        }
+        return temperature / 100.0;
     }
 }

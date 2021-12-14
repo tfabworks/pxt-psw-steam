@@ -68,6 +68,7 @@ class microbitp : public MicroBitComponent
     }
 };
 
+    microbitp  pin0(14, MICROBIT_PIN_P0, PIN_CAPABILITY_STANDARD);
     microbitp  pin8(15, MICROBIT_PIN_P8, PIN_CAPABILITY_STANDARD);
 
     microbitp  pin = pin8;
@@ -153,14 +154,17 @@ class microbitp : public MicroBitComponent
 volatile int mtx=0;
 
     //%
-    int16_t Temperature() {
+    int16_t Temperature( uint8_t pin_number ) {
         while(mtx) {
             ;
         }
         mtx=1;
 
         static int retry = RETRY_NUMBER;
-        pin = pin8;
+		if ( pin_number == 0 )
+			pin = pin0;
+		else if ( pin_number == 8 )
+			pin = pin8;
         init();
         writeByte(0xCC);
         convert();
@@ -184,7 +188,7 @@ volatile int mtx=0;
                 retry = 0;
                 return -10000;
             }
-            return Temperature();
+            return Temperature( pin_number );
         }
         retry = RETRY_NUMBER;
         return temp * 100 / 16;
