@@ -242,7 +242,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId = TP2_getTemperature
-    //% block="温度[℃] (TP2) || %format"
+    //% block="温度[℃](TP2) || %format"
     //% group="TP2(拡張アダプタ)"
     //% weight=100
     //% advanced=true
@@ -345,7 +345,7 @@ namespace psw_steam {
      * TFW-IR2で赤外線リモコンコンセントOCR-05WをONします。
      */
     //% blockId=ir_on
-    //% block="赤外線ON"
+    //% block="赤外線オン"
     //% group="IR2(拡張アダプタ)"
     //% weight=100
 	//% advanced=true
@@ -422,7 +422,7 @@ namespace psw_steam {
      * TFW-IR2で赤外線リモコンコンセントOCR-05WをOFFします。
      */
     //% blockId=ir_off
-    //% block="赤外線OFF"
+    //% block="赤外線オフ"
     //% group="IR2(拡張アダプタ)"
     //% weight=90
     //% advanced=true
