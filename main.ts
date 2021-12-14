@@ -292,7 +292,7 @@ namespace psw_steam {
      */
     //% blockId=uds
     //% block="距離[cm] || %format"
-    //% group="DS1"
+    //% group="DS1(拡張アダプタ)"
     //% weight=100
 	//% advanced=true
     export function getDistance(format:OutputNumberFormat = OutputNumberFormat.INTEGER):number {
@@ -346,7 +346,7 @@ namespace psw_steam {
      */
     //% blockId=ir_on
     //% block="赤外線ON"
-    //% group="IR2"
+    //% group="IR2(拡張アダプタ)"
     //% weight=100
 	//% advanced=true
     export function IR_ON() {
@@ -423,7 +423,7 @@ namespace psw_steam {
      */
     //% blockId=ir_off
     //% block="赤外線OFF"
-    //% group="IR2"
+    //% group="IR2(拡張アダプタ)"
     //% weight=90
     //% advanced=true
     export function IR_OFF() {
@@ -502,7 +502,7 @@ namespace psw_steam {
     //% blockId=sw1_out
     //% block="出力を%duty|\\%にする"
     //% duty.min=0 duty.max=100
-    //% group="SW1"
+    //% group="SW1(拡張アダプタ)"
     //% weight=60
 	//% advanced=true
     export function sw1_out(duty: number): void {
@@ -516,7 +516,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId=get_temperature block="温度[℃] (EN1) || %format"
-    //% group="EN1"
+    //% group="EN1(拡張アダプタ)"
     //% weight=100
 	//% advanced=true
     export function getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -532,7 +532,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId=get_humidity block="湿度[\\%] || %format"
-    //% group="EN1"
+    //% group="EN1(拡張アダプタ)"
     //% weight=90
 	//% advanced=true
     export function getHumidity(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -548,7 +548,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId=get_pressure block="気圧[hPa] || %format"
-    //% group="EN1"
+    //% group="EN1(拡張アダプタ)"
     //% weight=80
 	//% advanced=true
     export function getPressure(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -565,7 +565,7 @@ namespace psw_steam {
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId=get_altitude block="高度差[m] 基準圧%referencePressure || %format"
-    //% group="EN1"
+    //% group="EN1(拡張アダプタ)"
     //% weight=70
 	//% advanced=true
     export function getAltitude(referencePressure: number = 1013, format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -610,7 +610,7 @@ namespace psw_steam {
      * TFW-SL1で検知した音の大きさを返します（0-1023）
      */
     //% blockId=SL1_sound_pressure block="音の大きさ(SL1)"
-    //% group="SL1"
+    //% group="SL1(拡張アダプタ)"
     //% weight=100
 	//% advanced=true
     export function SL1_sound_pressure(): number {
