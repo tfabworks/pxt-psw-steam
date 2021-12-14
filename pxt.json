@@ -1,0 +1,30 @@
+{
+    "name": "kkk",
+    "version": "0.0.0",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "microphone": "*"
+    },
+    "files": [
+        "README.md",
+        "main.ts",
+        "ds18b20/ds18b20.ts",
+        "ds18b20/ds18b20.cpp",
+        "_locales/ja/kkk-strings.json",
+        "_locales/ja/kkk-jsdoc-strings.json"
+    ],
+    "testFiles": [
+        "test.blocks",
+        "test.ts"
+    ],
+    "public": true,
+    "targetVersions": {
+        "target": "4.0.16",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
+}
