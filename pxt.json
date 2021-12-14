@@ -10,9 +10,7 @@
         "README.md",
         "main.ts",
         "ds18b20/ds18b20.ts",
-        "ds18b20/ds18b20.cpp",
-        "_locales/ja/psw_steam-strings.json",
-        "_locales/ja/psw_steam-jsdoc-strings.json"
+        "ds18b20/ds18b20.cpp"
     ],
     "testFiles": [
         "test.blocks",
@@ -26,5 +24,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "blocksprj"
 }
