@@ -237,6 +237,28 @@ namespace psw_steam {
 //        return Math.round( temperature / 10.0 ) /10.0;
     }
 
+	/**
+     * TFW-TP2の温度[℃]を返します。
+     * @param format number format, eg: OutputNumberFormat.INTEGER
+     */
+    //% blockId = TP2_getTemperature
+    //% block="温度[℃] (TP2) || %format"
+    //% group="TP2"
+    //% weight=100
+    //% advanced=true
+    export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
+        while(_mtx_temperature) {
+            basic.pause(100)
+        }
+        _mtx_temperature = true;
+        const temperature = DS18B20.Temperature(0);
+        _mtx_temperature = false;
+        if (format === OutputNumberFormat.INTEGER) {
+            return Math.round(temperature / 100.0);
+        }
+        return temperature / 100.0;
+    }
+	
     /**
      * micro:bit本体が揺り動かされた場合に真を返します
      */
@@ -1078,29 +1100,9 @@ namespace BME280_I2C {
     //% blockId=SL1_sound_pressure block="音の大きさ(SL1)"
     //% group="SL1"
     //% weight=100
-    //% advanced=true
     export function SL1_sound_pressure(): number {
         return pins.i2cReadNumber(8, NumberFormat.UInt16BE, false)
     }
 	
-	/**
-     * TFW-TP2の温度[℃]を返します。
-     * @param format number format, eg: OutputNumberFormat.INTEGER
-     */
-    //% blockId = TP2_getTemperature
-    //% block="温度[℃] (TP2) || %format"
-    //% group="TP2"
-    //% weight=100
-    export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
-        while(_mtx_temperature) {
-            basic.pause(100)
-        }
-        _mtx_temperature = true;
-        const temperature = DS18B20.Temperature(0);
-        _mtx_temperature = false;
-        if (format === OutputNumberFormat.INTEGER) {
-            return Math.round(temperature / 100.0);
-        }
-        return temperature / 100.0;
-    }
+
 }
