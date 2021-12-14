@@ -71,7 +71,7 @@ namespace psw_steam {
 
     }
 
-	
+
     /* 暗い判定本体 */
     function _is_dark(暗い判定閾値: number, 明るい判定閾値: number): boolean {
         if ((暗い判定閾値 > 明るい判定閾値)
@@ -144,26 +144,26 @@ namespace psw_steam {
         control.assert(false); return false;
     }
 
-    let _mtx_light:boolean =false;
-    let is_light_init:boolean = true;
+    let _mtx_light: boolean = false;
+    let is_light_init: boolean = true;
 
     function _light_level_lux(): number {
-        while( _mtx_light  ) {
+        while (_mtx_light) {
             basic.pause(100);
         }
         _mtx_light = true;
 
-        if ( is_light_init === true ) {
+        if (is_light_init === true) {
             basic.pause(100)
-            pins.i2cWriteNumber( 41, 0x8019, NumberFormat.UInt16BE, false ) // gain 48x
-//            pins.i2cWriteNumber(41, 0x800D, NumberFormat.UInt16BE, false) // gain 8x
+            pins.i2cWriteNumber(41, 0x8019, NumberFormat.UInt16BE, false) // gain 48x
+            //            pins.i2cWriteNumber(41, 0x800D, NumberFormat.UInt16BE, false) // gain 8x
             basic.pause(10)
             is_light_init = false;
         }
 
         let data1, data2, data3, data4
-        pins.i2cWriteNumber( 41, 136, NumberFormat.UInt8BE, true )
-        data1 = pins.i2cReadNumber( 41, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(41, 136, NumberFormat.UInt8BE, true)
+        data1 = pins.i2cReadNumber(41, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(41, 137, NumberFormat.UInt8BE, true)
         data2 = pins.i2cReadNumber(41, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(41, 138, NumberFormat.UInt8BE, true)
@@ -171,7 +171,7 @@ namespace psw_steam {
         pins.i2cWriteNumber(41, 139, NumberFormat.UInt8BE, true)
         data4 = pins.i2cReadNumber(41, NumberFormat.UInt8BE, false)
 
-        const lux = data4*256 + data3;
+        const lux = data4 * 256 + data3;
         _mtx_light = false;
         return lux;
     }
@@ -183,8 +183,8 @@ namespace psw_steam {
     //% weight=55
     //% group="明るさセンサー(PSW)"
     export function light_level(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
-//        return _light_level_lux()
-        return Math.round(Math.constrain( Math.map( _light_level_lux()-10, 0, 500, 0, 255), 0, 255))
+        //        return _light_level_lux()
+        return Math.round(Math.constrain(Math.map(_light_level_lux() - 10, 0, 500, 0, 255), 0, 255))
     }
 
 
@@ -199,13 +199,13 @@ namespace psw_steam {
     //% group="温度センサー(PSW)"
     export function gt_temperature(temperatureThreshold: number, settingHotCold: HOT_COLD): boolean {
         if (settingHotCold === HOT_COLD.HOT) {
-            if ( get_temperature( OutputNumberFormat.FLOAT ) > temperatureThreshold) {
+            if (get_temperature(OutputNumberFormat.FLOAT) > temperatureThreshold) {
                 return true;
             }
             return false;
         }
         if (settingHotCold === HOT_COLD.COLD) {
-            if ( get_temperature( OutputNumberFormat.FLOAT ) < temperatureThreshold) {
+            if (get_temperature(OutputNumberFormat.FLOAT) < temperatureThreshold) {
                 return true;
             }
             return false;
@@ -213,7 +213,7 @@ namespace psw_steam {
         return false;
     }
 
-    let _mtx_temperature:boolean = false;
+    let _mtx_temperature: boolean = false;
 
     /**
      * 温度[℃]を返します
@@ -224,7 +224,7 @@ namespace psw_steam {
     //% weight=45
     //% group="温度センサー(PSW)"
     export function get_temperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
-        while(_mtx_temperature) {
+        while (_mtx_temperature) {
             basic.pause(100)
         }
         _mtx_temperature = true;
@@ -234,31 +234,9 @@ namespace psw_steam {
             return Math.round(temperature / 100.0);
         }
         return temperature / 100.0;
-//        return Math.round( temperature / 10.0 ) /10.0;
+        //        return Math.round( temperature / 10.0 ) /10.0;
     }
 
-	/**
-     * TFW-TP2の温度[℃]を返します。
-     * @param format number format, eg: OutputNumberFormat.INTEGER
-     */
-    //% blockId = TP2_getTemperature
-    //% block="温度[℃] aaaaaa(TP2) || %format"
-    //% group="TP2(拡張アダプタ)"
-    //% weight=100
-    //% advanced=true
-    export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
-        while(_mtx_temperature) {
-            basic.pause(100)
-        }
-        _mtx_temperature = true;
-        const temperature = DS18B20.Temperature(0);
-        _mtx_temperature = false;
-        if (format === OutputNumberFormat.INTEGER) {
-            return Math.round(temperature / 100.0);
-        }
-        return temperature / 100.0;
-    }
-	
     /**
      * micro:bit本体が揺り動かされた場合に真を返します
      */
@@ -285,8 +263,30 @@ namespace psw_steam {
     export function pause_sec(sec: number) {
         basic.pause(1000 * sec);
     }
-	
-	/**
+
+    /**
+     * TFW-TP2の温度[℃]を返します。
+     * @param format number format, eg: OutputNumberFormat.INTEGER
+     */
+    //% blockId=TP2_getTemperature
+    //% block="温度[℃] (TP2) || %format"
+    //% group="TP2(拡張アダプタ)"
+    //% weight=100
+    //% advanced=true
+    export function TP2_getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
+        while (_mtx_temperature) {
+            basic.pause(100)
+        }
+        _mtx_temperature = true;
+        const temperature = DS18B20.Temperature(0);
+        _mtx_temperature = false;
+        if (format === OutputNumberFormat.INTEGER) {
+            return Math.round(temperature / 100.0);
+        }
+        return temperature / 100.0;
+    }
+
+    /**
      * TFW-DS1で距離[cm]を測定します。
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
@@ -294,12 +294,12 @@ namespace psw_steam {
     //% block="距離[cm] || %format"
     //% group="DS1(拡張アダプタ)"
     //% weight=100
-	//% advanced=true
-    export function getDistance(format:OutputNumberFormat = OutputNumberFormat.INTEGER):number {
+    //% advanced=true
+    export function getDistance(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         // calculate distance -> median filter -> return value
         let arr: number[] = [];
         let l;
-        for(l = 0; l < 3; l++) {
+        for (l = 0; l < 3; l++) {
             let pulseWidth;
             const MAX_DIST_CM = 300;
             pins.digitalWritePin(DigitalPin.P0, 0);
@@ -316,12 +316,12 @@ namespace psw_steam {
             else if (pulseWidth >= MAX_DIST_CM / 153 * 29 * 2 * 100) {
                 distance_cm = MAX_DIST_CM;
             }
-            else{
+            else {
                 distance_cm = pulseWidth * 153 / 29 / 2 / 100;
             }
 
-            if ( format === OutputNumberFormat.INTEGER ){
-                distance_cm = Math.round( distance_cm );
+            if (format === OutputNumberFormat.INTEGER) {
+                distance_cm = Math.round(distance_cm);
             }
 
             arr.push(distance_cm);
@@ -329,8 +329,8 @@ namespace psw_steam {
         arr.sort((n1, n2) => n1 - n2);
         return arr[1];
     }
-	
-	    const ビットパターン_ON = [1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0]
+
+    const ビットパターン_ON = [1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0]
     const ビットパターン_OFF = [1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0]
     const 繰り返し回数 = 30
     const 輸送波パルス幅 = 600
@@ -348,7 +348,7 @@ namespace psw_steam {
     //% block="赤外線オン"
     //% group="IR2(拡張アダプタ)"
     //% weight=100
-	//% advanced=true
+    //% advanced=true
     export function IR_ON() {
         輸送波送信ポート設定()
 
@@ -494,8 +494,8 @@ namespace psw_steam {
             control.waitMicros(850)
         }
     }
-	
-	/**
+
+    /**
      * TFW-SW1で出力をコントロールします。
      * @param duty set the duty-ratio, eg: 100
      */
@@ -504,12 +504,12 @@ namespace psw_steam {
     //% duty.min=0 duty.max=100
     //% group="SW1(拡張アダプタ)"
     //% weight=60
-	//% advanced=true
+    //% advanced=true
     export function sw1_out(duty: number): void {
         pins.analogWritePin(AnalogPin.P0, (duty / 100 * 1023));
     }
-	
-	    let EN1_init_done: boolean = false;
+
+    let EN1_init_done: boolean = false;
 
     /**
      * TFW-EN1で温度[℃]を測定します。
@@ -518,7 +518,7 @@ namespace psw_steam {
     //% blockId=get_temperature block="温度[℃] (EN1) || %format"
     //% group="EN1(拡張アダプタ)"
     //% weight=100
-	//% advanced=true
+    //% advanced=true
     export function getTemperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -534,7 +534,7 @@ namespace psw_steam {
     //% blockId=get_humidity block="湿度[\\%] || %format"
     //% group="EN1(拡張アダプタ)"
     //% weight=90
-	//% advanced=true
+    //% advanced=true
     export function getHumidity(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -550,7 +550,7 @@ namespace psw_steam {
     //% blockId=get_pressure block="気圧[hPa] || %format"
     //% group="EN1(拡張アダプタ)"
     //% weight=80
-	//% advanced=true
+    //% advanced=true
     export function getPressure(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -567,7 +567,7 @@ namespace psw_steam {
     //% blockId=get_altitude block="高度差[m] 基準圧%referencePressure || %format"
     //% group="EN1(拡張アダプタ)"
     //% weight=70
-	//% advanced=true
+    //% advanced=true
     export function getAltitude(referencePressure: number = 1013, format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
         EN1_init_if_firsttime();
         if (format === OutputNumberFormat.INTEGER) {
@@ -598,25 +598,25 @@ namespace psw_steam {
         calcHeight_Result = (calcHeight_xa - 1) * (T + 273.15) / 0.0065;
         return calcHeight_Result;
     }
-    
+
     function EN1_init_if_firsttime(): void {
         if (EN1_init_done == false) {
             BME280_I2C.Init(BME280_I2C_ADDRESS.e_0x76);
             EN1_init_done = true;
         }
     }
-	
-	/**
+
+    /**
      * TFW-SL1で検知した音の大きさを返します（0-1023）
      */
     //% blockId=SL1_sound_pressure block="音の大きさ(SL1)"
     //% group="SL1(拡張アダプタ)"
     //% weight=100
-	//% advanced=true
+    //% advanced=true
     export function SL1_sound_pressure(): number {
         return pins.i2cReadNumber(8, NumberFormat.UInt16BE, false)
     }
-	
+
 }
 
 enum BME280_I2C_ADDRESS {
