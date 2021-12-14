@@ -1,30 +1,30 @@
 enum DARK_BRIGHT {
-    //% block="IS_DARK"
+    //% block="暗い"
     IS_DARK,
-    //% block="IS_BRIGHT"
+    //% block="明るい"
     IS_BRIGHT,
 }
 enum HOT_COLD {
-    //% block="HOT"
+    //% block="熱い"
     HOT,
-    //% block="COLD"
+    //% block="冷たい"
     COLD,
 }
 
 enum OutputNumberFormat {
-    //% block="INTEGER"
+    //% block="整数"
     INTEGER = 0,
-    //% block="FLOAT"
+    //% block="小数"
     FLOAT = 1
 }
 
-//% weight=115 icon="\uf0e7" color=#d2691e block="How to use electricity"
+//% weight=115 icon="\uf0e7" color=#d2691e block="STEAM"
 namespace psw_steam {
 
     /**
-     * Turn ON the controlled-switch
+     * 自動スイッチをオンにします
      */
-    //% blockId=turn_on block="Switch Turn ON"
+    //% blockId=turn_on block="スイッチオン"
     //% weight=90
     //% group="スイッチ"
     export function turn_on(): void {
@@ -32,9 +32,9 @@ namespace psw_steam {
     }
 
     /**
-     * Turn OFF the controlled-switch
+     * 自動スイッチをオフにします
      */
-    //% blockId=turn_off block="Switch Turn OFF"
+    //% blockId=turn_off block="スイッチオフ"
     //% weight=80
     //% group="スイッチ"
     export function turn_off(): void {
@@ -42,9 +42,9 @@ namespace psw_steam {
     }
 
     /**
-     * Return PIR Motion sensor value.
+     * 人感センサーが反応しているとき真を返します
      */
-    //% blockId=is_man_moving block="is human moving"
+    //% blockId=is_man_moving block="人が動いた"
     //% weight=75
     //% group="人感センサー"
     export function is_man_moving(): boolean {
@@ -61,9 +61,9 @@ namespace psw_steam {
     const _HYSTERESIS: number = _明るい判定閾値 - _暗い判定閾値;
 
     /**
-     * return true when the dark ( light level <5 )
+     * 明るさセンサーが暗い場合（5未満）に真を返します
      */
-    //% blockId=is_dark block="is dark"
+    //% blockId=is_dark block="暗い"
     //% weight=70
     //% group="明るさセンサー"
     export function is_dark(): boolean {
@@ -111,7 +111,7 @@ namespace psw_steam {
     }
 
     /**
-     * return true when darker/brighter than light threthold
+     * return 明るさセンサーがしきい値より暗い（または明るい）場合に真を返します
      * @param light_threshold 判定閾値, eg:5
      * @param dark_bright 暗いか明るいを指定, eg:暗い
      */
@@ -177,9 +177,9 @@ namespace psw_steam {
     }
 
     /**
-     * return light sensor value:0-255
+     * 明るさセンサーの値を0-255で返します。0が最も暗く、255が最も明るいときの値です
      */
-    //% blockId=light_level block="light level"
+    //% blockId=light_level block="明るさ"
     //% weight=55
     //% group="明るさセンサー"
     export function light_level(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -189,7 +189,7 @@ namespace psw_steam {
 
 
     /**
-     * return true when sensor is hot/cold than threthold
+     * 温度センサーが、しきい値より熱い（または冷たい）場合に真を返します
      * @param temperatureThreshold 判定閾値, eg: 30
      * @param settingHotCold 熱いか冷たいを指定, eg:熱い
      */
@@ -216,11 +216,11 @@ namespace psw_steam {
     let _mtx_temperature:boolean = false;
 
     /**
-     * return temperature degC.
+     * 温度[℃]を返します
      * @param format number format, eg: OutputNumberFormat.INTEGER
      */
     //% blockId = get_temperature
-    //% block="temperature [degC]|| %format"
+    //% block="温度[℃]|| %format"
     //% weight=45
     //% group="温度センサー"
     export function get_temperature(format: OutputNumberFormat = OutputNumberFormat.INTEGER): number {
@@ -238,10 +238,10 @@ namespace psw_steam {
     }
 
     /**
-     * return true when the micro:bit is moved.
+     * micro:bit本体が揺り動かされた場合に真を返します
      */
     //% blockId=is_move
-    //% block="is moved"
+    //% block="ゆれた"
     //% weight=40
     //% group="micro:bit本体"
     export function is_move(): boolean {
@@ -253,11 +253,11 @@ namespace psw_steam {
     }
 
     /**
-     * wait for designated seconds
+     * 指定された秒数の間、一時停止します。
      * @param sec 秒, eg: 1
      */
     //% blockId=pause_sec
-    //% block="pause%sec"
+    //% block="一時停止(秒)%sec"
     //% weight=30
     //% group="micro:bit本体"
     export function pause_sec(sec: number) {
