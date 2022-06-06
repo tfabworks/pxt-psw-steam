@@ -56,8 +56,8 @@ namespace psw_steam {
     }
 
     let _今まで暗い: boolean = false;
-    const _暗い判定閾値: number = 4;
-    const _明るい判定閾値: number = 7;
+    const _暗い判定閾値: number = 60;
+    const _明るい判定閾値: number = 65;
     const _HYSTERESIS: number = _明るい判定閾値 - _暗い判定閾値;
 
     /**
