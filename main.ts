@@ -61,7 +61,7 @@ namespace psw_steam {
     const _HYSTERESIS: number = _明るい判定閾値 - _暗い判定閾値;
 
     /**
-     * 明るさセンサーが暗い場合（5未満）に真を返します
+     * 明るさセンサーが暗い場合（60未満）に真を返します
      */
     //% blockId=is_dark block="暗い"
     //% weight=70
